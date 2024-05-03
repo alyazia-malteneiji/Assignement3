@@ -8,14 +8,14 @@ import os
 data_path = "data"
 if not os.path.exists(data_path):
     os.makedirs(data_path)
-# Function to save employee data to a file
+
 def save_employee_data(employees, filename):
     try:
         with open(os.path.join(data_path, filename), 'wb') as dumpf:
             pickle.dump(employees, dumpf)
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while saving employee data: {e}")
-# Function to load employee data to a file
+
 def load_employee_data():
     try:
         with open(os.path.join(data_path, 'employees.pkl'), 'rb') as loadf:
@@ -26,14 +26,14 @@ def load_employee_data():
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while loading employee data: {e}")
         return {}
-# Function to save client data to a file
+
 def save_client_data(clients, filename):
     try:
         with open(os.path.join(data_path, filename), 'wb') as dumpf:
             pickle.dump(clients, dumpf)
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while saving client data: {e}")
-# Function to load client data to a file
+
 def load_client_data():
     try:
         with open(os.path.join(data_path, 'clients.pkl'), 'rb') as loadf:
@@ -44,14 +44,14 @@ def load_client_data():
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while loading client data: {e}")
         return {}
-# Function to save guest data to a file
+
 def save_guest_data(guests, filename):
     try:
         with open(os.path.join(data_path, filename), 'wb') as dumpf:
             pickle.dump(guests, dumpf)
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while saving guest data: {e}")
-# Function to load guest data to a file
+
 def load_guest_data():
     try:
         with open(os.path.join(data_path, 'guests.pkl'), 'rb') as loadf:
@@ -62,14 +62,14 @@ def load_guest_data():
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while loading guest data: {e}")
         return {}
-# Function to save supplier data to a file
+
 def save_supplier_data(suppliers, filename):
     try:
         with open(os.path.join(data_path, filename), 'wb') as dumpf:
             pickle.dump(suppliers, dumpf)
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while saving supplier data: {e}")
-# Function to load supplier data to a file
+
 def load_supplier_data():
     try:
         with open(os.path.join(data_path, 'suppliers.pkl'), 'rb') as loadf:
@@ -82,7 +82,7 @@ def load_supplier_data():
         messagebox.showerror("Error", f"An error occurred while loading supplier data: {e}")
         return []
 
-# Function to save event data to a file
+
 def save_event_data(events, filename):
     try:
         with open(os.path.join(data_path, filename), 'wb') as dumpf:
@@ -90,7 +90,6 @@ def save_event_data(events, filename):
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while saving event data: {e}")
 
-# Function to load event data to a file
 def load_event_data():
     try:
         with open(os.path.join(data_path, 'events.pkl'), 'rb') as loadf:
@@ -101,14 +100,14 @@ def load_event_data():
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while loading event data: {e}")
         return {}  # Ensure returning a dictionary in case of an error
-# Function to save venue data to a file
+
 def save_venue_data(venues, filename):
     try:
         with open(os.path.join(data_path, filename), 'wb') as dumpf:
             pickle.dump(venues, dumpf)
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while saving venue data: {e}")
-# Function to load venue data to a file
+
 def load_venue_data():
     try:
         with open(os.path.join(data_path, 'venues.pkl'), 'rb') as loadf:
@@ -119,7 +118,7 @@ def load_venue_data():
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while loading venue data: {e}")
         return {}
-''' class for a person '''
+
 class Person:
     def __init__(self, first_name, last_name, gender, phone_number):
         self.first_name = first_name
@@ -132,7 +131,7 @@ class Person:
 
     def get_details(self):
         return f"Name: {self.get_full_name()}, Gender: {self.gender}, Phone: {self.phone_number}"
-''' class for employee inheriting from person '''
+
 class Employee(Person):
     def __init__(self, first_name, last_name, gender, phone_number, employee_id, department, job_title, salary):
         super().__init__(first_name, last_name, gender, phone_number)
@@ -145,7 +144,7 @@ class Employee(Person):
         details = super().get_details()
         details += f"\nEmployee ID: {self.employee_id}\nDepartment: {self.department}\nJob Title: {self.job_title}\nSalary: {self.salary}"
         return details
-''' class for client inhereting from person '''
+
 class Client(Person):
     def __init__(self, first_name, last_name, gender, phone_number, client_id, email):
         super().__init__(first_name, last_name, gender, phone_number)
@@ -156,7 +155,7 @@ class Client(Person):
         details = super().get_details()
         details += f"\nClient ID: {self.client_id}\nEmail: {self.email}"
         return details
-''' class for guest inhereting from person '''
+
 class Guest(Person):
     def __init__(self, first_name, last_name, gender, phone_number, guest_id):
         super().__init__(first_name, last_name, gender, phone_number)  # Call to the superclass constructor
@@ -164,7 +163,7 @@ class Guest(Person):
 
     def get_details(self):
         return super().get_details() + f", Guest ID: {self.guest_id}"
-''' class for venue'''
+
 class Venue:
     def __init__(self, venue_id, venue_name, location):
         self.venue_id = venue_id
@@ -173,7 +172,7 @@ class Venue:
 
     def __str__(self):
         return f"Venue ID: {self.venue_id}, Venue Name: {self.venue_name}, Location: {self.location}"
-''' class for supplier '''
+
 class Supplier:
     def __init__(self, supplier_id, supplier_name, service_offered):
         self.supplier_id = supplier_id
@@ -182,8 +181,8 @@ class Supplier:
 
     def __str__(self):
         return f"Supplier ID: {self.supplier_id}, Supplier Name: {self.supplier_name}, Service Offered: {self.service_offered}"
-''' class for event'''
-class Event: #composition relationship with the Venue and The `Event` class has an aggregation relationship with the `Guest` and `Supplier` 
+
+class Event:
     def __init__(self, event_id, event_name, event_date, venue):
         self.event_id = event_id
         self.event_name = event_name
@@ -215,7 +214,7 @@ class Event: #composition relationship with the Venue and The `Event` class has 
                 f"Guests: {guest_details}, Suppliers: {supplier_details}")
 
 
-''' class for the management app '''
+
 class ManagementApp:
     def __init__(self, root):
         self.root = root
@@ -260,7 +259,7 @@ class ManagementApp:
         self.setup_venue_tab()  # Setup venue tab
 
         tab_control.pack(expand=1, fill="both")
-#setting up the employee tabs
+
     def setup_employee_tab(self):
         ttk.Label(self.employee_tab, text="Employee Management").grid(row=0, column=0, columnspan=4)
         self.employee_tree = ttk.Treeview(self.employee_tab, columns=("ID", "Name", "Department", "Job Title", "Salary"), show="headings")
@@ -275,7 +274,7 @@ class ManagementApp:
         ttk.Button(self.employee_tab, text="Remove Employee", command=self.remove_employee).grid(row=2, column=2)
         ttk.Button(self.employee_tab, text="Find by ID", command=self.find_employee).grid(row=2, column=3)
         self.refresh_employee_table()
-#setting up the client tabs
+
     def setup_client_tab(self):
         ttk.Label(self.client_tab, text="Client Management").grid(row=0, column=0, columnspan=4)
         self.client_tree = ttk.Treeview(self.client_tab, columns=("ID", "Name", "Email"), show="headings")
@@ -288,7 +287,7 @@ class ManagementApp:
         ttk.Button(self.client_tab, text="Remove Client", command=self.remove_client).grid(row=2, column=2)
         ttk.Button(self.client_tab, text="Find by ID", command=self.find_client).grid(row=2, column=3)
         self.refresh_client_table()
-#setting up the guest tab
+
     def setup_guest_tab(self):
         ttk.Label(self.guest_tab, text="Guest Management").grid(row=0, column=0, columnspan=4)
         self.guest_tree = ttk.Treeview(self.guest_tab, columns=("ID", "Name", "Gender", "Phone Number"),
@@ -301,7 +300,7 @@ class ManagementApp:
         ttk.Button(self.guest_tab, text="Remove Guest", command=self.remove_guest).grid(row=2, column=2)
         ttk.Button(self.guest_tab, text="Find by ID", command=self.find_guest).grid(row=2, column=3)
         self.refresh_guest_table()
-#setting up the supplier tab
+
     def setup_supplier_tab(self):
         ttk.Label(self.supplier_tab, text="Supplier Management").grid(row=0, column=0, columnspan=4)
         self.supplier_tree = ttk.Treeview(self.supplier_tab, columns=("ID", "Name", "Service"), show="headings")
@@ -314,7 +313,7 @@ class ManagementApp:
         ttk.Button(self.supplier_tab, text="Remove Supplier", command=self.remove_supplier).grid(row=2, column=2)
         ttk.Button(self.supplier_tab, text="Find by ID", command=self.find_supplier).grid(row=2, column=3)
         self.refresh_supplier_table()
-#setting up the event tab
+
     def setup_event_tab(self):
         ttk.Label(self.event_tab, text="Event Management").grid(row=0, column=0, columnspan=4)
         self.event_tree = ttk.Treeview(self.event_tab, columns=("ID", "Name", "Date", "Venue"), show="headings")
@@ -328,7 +327,7 @@ class ManagementApp:
         ttk.Button(self.event_tab, text="Remove Event", command=self.remove_event).grid(row=2, column=2)
         ttk.Button(self.event_tab, text="Find by ID", command=self.find_event).grid(row=2, column=3)
         self.refresh_event_table()
-#setting up the venue tab
+
     def setup_venue_tab(self):
         ttk.Label(self.venue_tab, text="Venue Management").grid(row=0, column=0, columnspan=4)
         self.venue_tree = ttk.Treeview(self.venue_tab, columns=("ID", "Name", "Location"), show="headings")
@@ -341,7 +340,7 @@ class ManagementApp:
         ttk.Button(self.venue_tab, text="Remove Venue", command=self.remove_venue).grid(row=2, column=2)
         ttk.Button(self.venue_tab, text="Find by ID", command=self.find_venue).grid(row=2, column=3)
         self.refresh_venue_table()
-''' refreshing all tabs'''
+
     def refresh_employee_table(self):
         for i in self.employee_tree.get_children():
             self.employee_tree.delete(i)
@@ -376,7 +375,7 @@ class ManagementApp:
             self.event_tree.insert("", "end", iid=event_id,
                                    values=(event.event_id, event.event_name, event.event_date, event.venue))
 
-#starting the employee forms
+
     def open_add_employee_form(self):
         self.add_employee_window = tk.Toplevel(self.root)
         self.add_employee_window.title("Add New Employee")
@@ -435,7 +434,7 @@ class ManagementApp:
             messagebox.showinfo("Employee Details", details)
         else:
             messagebox.showerror("Error", "Employee not found")
-#starting the client forms
+
     def open_add_client_form(self):
         self.add_client_window = tk.Toplevel(self.root)
         self.add_client_window.title("Add New Client")
@@ -488,7 +487,7 @@ class ManagementApp:
             messagebox.showinfo("Client Details", details)
         else:
             messagebox.showerror("Error", "Client not found")
-#starting the guest forms 
+
     def open_add_guest_form(self):
         self.add_guest_window = tk.Toplevel(self.root)
         self.add_guest_window.title("Add New Guest")
@@ -547,7 +546,7 @@ class ManagementApp:
             messagebox.showinfo("Guest Details", details)
         else:
             messagebox.showerror("Error", "Guest not found")
-#starting the supplier forms
+
     def open_add_supplier_form(self):
         self.add_supplier_window = tk.Toplevel(self.root)
         self.add_supplier_window.title("Add New Supplier")
@@ -605,7 +604,7 @@ class ManagementApp:
                 break
         else:
             messagebox.showerror("Error", "Supplier not found")
-#starting the event form
+
     def open_add_event_form(self):
         self.add_event_window = tk.Toplevel(self.root)
         self.add_event_window.title("Add New Event")
@@ -668,7 +667,7 @@ class ManagementApp:
             messagebox.showinfo("Event Details", details)
         else:
             messagebox.showerror("Error", "Event not found")
-#starting the venue form
+
     def open_add_venue_form(self):
         self.add_venue_window = tk.Toplevel(self.root)
         self.add_venue_window.title("Add New Venue")
@@ -728,7 +727,8 @@ class ManagementApp:
         for venue_id, venue in self.venues.items():
             self.venue_tree.insert("", "end", values=(venue.venue_id, venue.venue_name, venue.location))
 
-#run final
+
 root = tk.Tk()
 app = ManagementApp(root)
 root.mainloop()
+
