@@ -1,0 +1,734 @@
+#importing necessary 
+import tkinter as tk
+from tkinter import ttk, simpledialog, messagebox
+import pickle
+import os
+
+# Set up the directory for data storage
+data_path = "data"
+if not os.path.exists(data_path):
+    os.makedirs(data_path)
+# Function to save employee data to a file
+def save_employee_data(employees, filename):
+    try:
+        with open(os.path.join(data_path, filename), 'wb') as dumpf:
+            pickle.dump(employees, dumpf)
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while saving employee data: {e}")
+# Function to load employee data to a file
+def load_employee_data():
+    try:
+        with open(os.path.join(data_path, 'employees.pkl'), 'rb') as loadf:
+            return pickle.load(loadf)
+    except FileNotFoundError:
+        messagebox.showinfo("Information", "Employee data file not found. Starting with an empty dataset.")
+        return {}
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while loading employee data: {e}")
+        return {}
+# Function to save client data to a file
+def save_client_data(clients, filename):
+    try:
+        with open(os.path.join(data_path, filename), 'wb') as dumpf:
+            pickle.dump(clients, dumpf)
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while saving client data: {e}")
+# Function to load client data to a file
+def load_client_data():
+    try:
+        with open(os.path.join(data_path, 'clients.pkl'), 'rb') as loadf:
+            return pickle.load(loadf)
+    except FileNotFoundError:
+        messagebox.showinfo("Information", "Client data file not found. Starting with an empty dataset.")
+        return {}
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while loading client data: {e}")
+        return {}
+# Function to save guest data to a file
+def save_guest_data(guests, filename):
+    try:
+        with open(os.path.join(data_path, filename), 'wb') as dumpf:
+            pickle.dump(guests, dumpf)
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while saving guest data: {e}")
+# Function to load guest data to a file
+def load_guest_data():
+    try:
+        with open(os.path.join(data_path, 'guests.pkl'), 'rb') as loadf:
+            return pickle.load(loadf)
+    except FileNotFoundError:
+        messagebox.showinfo("Information", "Guest data file not found. Starting with an empty dataset.")
+        return {}
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while loading guest data: {e}")
+        return {}
+# Function to save supplier data to a file
+def save_supplier_data(suppliers, filename):
+    try:
+        with open(os.path.join(data_path, filename), 'wb') as dumpf:
+            pickle.dump(suppliers, dumpf)
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while saving supplier data: {e}")
+# Function to load supplier data to a file
+def load_supplier_data():
+    try:
+        with open(os.path.join(data_path, 'suppliers.pkl'), 'rb') as loadf:
+            suppliers_dict = pickle.load(loadf)
+            return list(suppliers_dict.values())  # Convert dict to list if necessary
+    except FileNotFoundError:
+        messagebox.showinfo("Information", "Supplier data file not found. Starting with an empty list.")
+        return []
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while loading supplier data: {e}")
+        return []
+
+# Function to save event data to a file
+def save_event_data(events, filename):
+    try:
+        with open(os.path.join(data_path, filename), 'wb') as dumpf:
+            pickle.dump(events, dumpf)
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while saving event data: {e}")
+
+# Function to load event data to a file
+def load_event_data():
+    try:
+        with open(os.path.join(data_path, 'events.pkl'), 'rb') as loadf:
+            return pickle.load(loadf)  # This should return a dictionary
+    except FileNotFoundError:
+        messagebox.showinfo("Information", "Event data file not found. Starting with an empty dataset.")
+        return {}  # Ensure returning a dictionary in case of an error or file not found
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while loading event data: {e}")
+        return {}  # Ensure returning a dictionary in case of an error
+# Function to save venue data to a file
+def save_venue_data(venues, filename):
+    try:
+        with open(os.path.join(data_path, filename), 'wb') as dumpf:
+            pickle.dump(venues, dumpf)
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while saving venue data: {e}")
+# Function to load venue data to a file
+def load_venue_data():
+    try:
+        with open(os.path.join(data_path, 'venues.pkl'), 'rb') as loadf:
+            return pickle.load(loadf)
+    except FileNotFoundError:
+        messagebox.showinfo("Information", "Venue data file not found. Starting with an empty dataset.")
+        return {}
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while loading venue data: {e}")
+        return {}
+''' class for a person '''
+class Person:
+    def __init__(self, first_name, last_name, gender, phone_number):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.gender = gender
+        self.phone_number = phone_number
+
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
+    def get_details(self):
+        return f"Name: {self.get_full_name()}, Gender: {self.gender}, Phone: {self.phone_number}"
+''' class for employee inheriting from person '''
+class Employee(Person):
+    def __init__(self, first_name, last_name, gender, phone_number, employee_id, department, job_title, salary):
+        super().__init__(first_name, last_name, gender, phone_number)
+        self.employee_id = employee_id
+        self.department = department
+        self.job_title = job_title
+        self.salary = salary
+
+    def get_details(self):
+        details = super().get_details()
+        details += f"\nEmployee ID: {self.employee_id}\nDepartment: {self.department}\nJob Title: {self.job_title}\nSalary: {self.salary}"
+        return details
+''' class for client inhereting from person '''
+class Client(Person):
+    def __init__(self, first_name, last_name, gender, phone_number, client_id, email):
+        super().__init__(first_name, last_name, gender, phone_number)
+        self.client_id = client_id
+        self.email = email
+
+    def get_details(self):
+        details = super().get_details()
+        details += f"\nClient ID: {self.client_id}\nEmail: {self.email}"
+        return details
+''' class for guest inhereting from person '''
+class Guest(Person):
+    def __init__(self, first_name, last_name, gender, phone_number, guest_id):
+        super().__init__(first_name, last_name, gender, phone_number)  # Call to the superclass constructor
+        self.guest_id = guest_id  # Initialize the guest_id attribute
+
+    def get_details(self):
+        return super().get_details() + f", Guest ID: {self.guest_id}"
+''' class for venue'''
+class Venue:
+    def __init__(self, venue_id, venue_name, location):
+        self.venue_id = venue_id
+        self.venue_name = venue_name
+        self.location = location
+
+    def __str__(self):
+        return f"Venue ID: {self.venue_id}, Venue Name: {self.venue_name}, Location: {self.location}"
+''' class for supplier '''
+class Supplier:
+    def __init__(self, supplier_id, supplier_name, service_offered):
+        self.supplier_id = supplier_id
+        self.supplier_name = supplier_name
+        self.service_offered = service_offered
+
+    def __str__(self):
+        return f"Supplier ID: {self.supplier_id}, Supplier Name: {self.supplier_name}, Service Offered: {self.service_offered}"
+''' class for event'''
+class Event: #composition relationship with the Venue and The `Event` class has an aggregation relationship with the `Guest` and `Supplier` 
+    def __init__(self, event_id, event_name, event_date, venue):
+        self.event_id = event_id
+        self.event_name = event_name
+        self.event_date = event_date
+        self.venue = venue
+        self.guests = []  # Guests are created and managed within the event
+        self.suppliers = []  # Aggregation with Supplier
+
+    def add_guest(self, name, address, age, guestID):
+        # Create a new Guest object within the event context
+        new_guest = Guest(name, address, age, guestID)
+        self.guests.append(new_guest)
+
+    def remove_guest(self, guestID):
+        # Remove a guest by ID
+        self.guests = [guest for guest in self.guests if guest.guestID != guestID]
+
+    def add_supplier(self, supplier):
+        self.suppliers.append(supplier)
+
+    def remove_supplier(self, supplier_id):
+        self.suppliers = [sup for sup in self.suppliers if sup.supplier_id != supplier_id]
+
+    def get_event_details(self):
+        guest_details = ", ".join(guest.get_details() for guest in self.guests)
+        supplier_details = ", ".join(str(supplier) for supplier in self.suppliers)
+        return (f"Event ID: {self.event_id}, Event Name: {self.event_name}, "
+                f"Event Date: {self.event_date}, Venue: {self.venue}, "
+                f"Guests: {guest_details}, Suppliers: {supplier_details}")
+
+
+''' class for the management app '''
+class ManagementApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Management System")
+        self.employees_filename = 'employees.pkl'
+        self.clients_filename = 'clients.pkl'
+        self.guests_filename = 'guests.pkl'
+        self.suppliers_filename = 'suppliers.pkl'
+        self.events_filename = 'events.pkl'
+        self.venues_filename = 'venues.pkl'
+        self.employees = load_employee_data()
+        self.clients = load_client_data()
+        self.guests = load_guest_data()
+        self.suppliers = load_supplier_data()
+        self.events = load_event_data()
+        self.venues = load_venue_data()
+
+        self.create_tabs()
+
+    def create_tabs(self):
+        tab_control = ttk.Notebook(self.root)
+
+        self.employee_tab = ttk.Frame(tab_control)
+        self.client_tab = ttk.Frame(tab_control)
+        self.guest_tab = ttk.Frame(tab_control)
+        self.supplier_tab = ttk.Frame(tab_control)
+        self.event_tab = ttk.Frame(tab_control)  # Create a tab for events
+        self.venue_tab = ttk.Frame(tab_control)  # Create a tab for venues
+
+        tab_control.add(self.employee_tab, text='Employee')
+        tab_control.add(self.client_tab, text='Client')
+        tab_control.add(self.guest_tab, text='Guest')
+        tab_control.add(self.supplier_tab, text='Supplier')
+        tab_control.add(self.event_tab, text='Events')  # Add the event tab
+        tab_control.add(self.venue_tab, text='Venue')  # Add venue tab
+
+        self.setup_employee_tab()
+        self.setup_client_tab()
+        self.setup_guest_tab()
+        self.setup_supplier_tab()
+        self.setup_event_tab()  # Make sure this is after events are initialized
+        self.setup_venue_tab()  # Setup venue tab
+
+        tab_control.pack(expand=1, fill="both")
+#setting up the employee tabs
+    def setup_employee_tab(self):
+        ttk.Label(self.employee_tab, text="Employee Management").grid(row=0, column=0, columnspan=4)
+        self.employee_tree = ttk.Treeview(self.employee_tab, columns=("ID", "Name", "Department", "Job Title", "Salary"), show="headings")
+        self.employee_tree.heading("ID", text="ID")
+        self.employee_tree.heading("Name", text="Name")
+        self.employee_tree.heading("Department", text="Department")
+        self.employee_tree.heading("Job Title", text="Job Title")
+        self.employee_tree.heading("Salary", text="Salary")
+        self.employee_tree.grid(row=1, column=0, columnspan=4, sticky='nsew')
+        ttk.Button(self.employee_tab, text="Add Employee", command=self.open_add_employee_form).grid(row=2, column=0)
+        ttk.Button(self.employee_tab, text="Modify Employee", command=self.modify_employee).grid(row=2, column=1)
+        ttk.Button(self.employee_tab, text="Remove Employee", command=self.remove_employee).grid(row=2, column=2)
+        ttk.Button(self.employee_tab, text="Find by ID", command=self.find_employee).grid(row=2, column=3)
+        self.refresh_employee_table()
+#setting up the client tabs
+    def setup_client_tab(self):
+        ttk.Label(self.client_tab, text="Client Management").grid(row=0, column=0, columnspan=4)
+        self.client_tree = ttk.Treeview(self.client_tab, columns=("ID", "Name", "Email"), show="headings")
+        self.client_tree.heading("ID", text="ID")
+        self.client_tree.heading("Name", text="Name")
+        self.client_tree.heading("Email", text="Email")
+        self.client_tree.grid(row=1, column=0, columnspan=4, sticky='nsew')
+        ttk.Button(self.client_tab, text="Add Client", command=self.open_add_client_form).grid(row=2, column=0)
+        ttk.Button(self.client_tab, text="Modify Client", command=self.modify_client).grid(row=2, column=1)
+        ttk.Button(self.client_tab, text="Remove Client", command=self.remove_client).grid(row=2, column=2)
+        ttk.Button(self.client_tab, text="Find by ID", command=self.find_client).grid(row=2, column=3)
+        self.refresh_client_table()
+#setting up the guest tab
+    def setup_guest_tab(self):
+        ttk.Label(self.guest_tab, text="Guest Management").grid(row=0, column=0, columnspan=4)
+        self.guest_tree = ttk.Treeview(self.guest_tab, columns=("ID", "Name", "Gender", "Phone Number"),
+                                       show="headings")
+        for col in self.guest_tree["columns"]:
+            self.guest_tree.heading(col, text=col)
+        self.guest_tree.grid(row=1, column=0, columnspan=4, sticky='nsew')
+        ttk.Button(self.guest_tab, text="Add Guest", command=self.open_add_guest_form).grid(row=2, column=0)
+        ttk.Button(self.guest_tab, text="Modify Guest", command=self.modify_guest).grid(row=2, column=1)
+        ttk.Button(self.guest_tab, text="Remove Guest", command=self.remove_guest).grid(row=2, column=2)
+        ttk.Button(self.guest_tab, text="Find by ID", command=self.find_guest).grid(row=2, column=3)
+        self.refresh_guest_table()
+#setting up the supplier tab
+    def setup_supplier_tab(self):
+        ttk.Label(self.supplier_tab, text="Supplier Management").grid(row=0, column=0, columnspan=4)
+        self.supplier_tree = ttk.Treeview(self.supplier_tab, columns=("ID", "Name", "Service"), show="headings")
+        self.supplier_tree.heading("ID", text="ID")
+        self.supplier_tree.heading("Name", text="Name")
+        self.supplier_tree.heading("Service", text="Service")
+        self.supplier_tree.grid(row=1, column=0, columnspan=4, sticky='nsew')
+        ttk.Button(self.supplier_tab, text="Add Supplier", command=self.open_add_supplier_form).grid(row=2, column=0)
+        ttk.Button(self.supplier_tab, text="Modify Supplier", command=self.modify_supplier).grid(row=2, column=1)
+        ttk.Button(self.supplier_tab, text="Remove Supplier", command=self.remove_supplier).grid(row=2, column=2)
+        ttk.Button(self.supplier_tab, text="Find by ID", command=self.find_supplier).grid(row=2, column=3)
+        self.refresh_supplier_table()
+#setting up the event tab
+    def setup_event_tab(self):
+        ttk.Label(self.event_tab, text="Event Management").grid(row=0, column=0, columnspan=4)
+        self.event_tree = ttk.Treeview(self.event_tab, columns=("ID", "Name", "Date", "Venue"), show="headings")
+        self.event_tree.heading("ID", text="Event ID")
+        self.event_tree.heading("Name", text="Event Name")
+        self.event_tree.heading("Date", text="Event Date")
+        self.event_tree.heading("Venue", text="Venue")
+        self.event_tree.grid(row=1, column=0, columnspan=4, sticky='nsew')
+        ttk.Button(self.event_tab, text="Add Event", command=self.open_add_event_form).grid(row=2, column=0)
+        ttk.Button(self.event_tab, text="Modify Event", command=self.modify_event).grid(row=2, column=1)
+        ttk.Button(self.event_tab, text="Remove Event", command=self.remove_event).grid(row=2, column=2)
+        ttk.Button(self.event_tab, text="Find by ID", command=self.find_event).grid(row=2, column=3)
+        self.refresh_event_table()
+#setting up the venue tab
+    def setup_venue_tab(self):
+        ttk.Label(self.venue_tab, text="Venue Management").grid(row=0, column=0, columnspan=4)
+        self.venue_tree = ttk.Treeview(self.venue_tab, columns=("ID", "Name", "Location"), show="headings")
+        self.venue_tree.heading("ID", text="ID")
+        self.venue_tree.heading("Name", text="Name")
+        self.venue_tree.heading("Location", text="Location")
+        self.venue_tree.grid(row=1, column=0, columnspan=4, sticky='nsew')
+        ttk.Button(self.venue_tab, text="Add Venue", command=self.open_add_venue_form).grid(row=2, column=0)
+        ttk.Button(self.venue_tab, text="Modify Venue", command=self.modify_venue).grid(row=2, column=1)
+        ttk.Button(self.venue_tab, text="Remove Venue", command=self.remove_venue).grid(row=2, column=2)
+        ttk.Button(self.venue_tab, text="Find by ID", command=self.find_venue).grid(row=2, column=3)
+        self.refresh_venue_table()
+''' refreshing all tabs'''
+    def refresh_employee_table(self):
+        for i in self.employee_tree.get_children():
+            self.employee_tree.delete(i)
+        for emp_id, emp in self.employees.items():
+            self.employee_tree.insert("", "end", values=(emp.employee_id, emp.get_full_name(), emp.department, emp.job_title, emp.salary))
+
+    def refresh_client_table(self):
+        for i in self.client_tree.get_children():
+            self.client_tree.delete(i)
+        for client_id, client in self.clients.items():
+            self.client_tree.insert("", "end", values=(client.client_id, client.get_full_name(), client.email))
+
+    def refresh_guest_table(self):
+        for item in self.guest_tree.get_children():
+            self.guest_tree.delete(item)  # Clear existing entries
+        for guest_id, guest in self.guests.items():
+            # Insert updated data back into the table
+            self.guest_tree.insert("", "end", iid=guest_id,
+                                   values=(guest.guest_id, guest.get_full_name(), guest.gender, guest.phone_number))
+
+    def refresh_supplier_table(self):
+        for item in self.supplier_tree.get_children():
+            self.supplier_tree.delete(item)
+        for supplier in self.suppliers:
+            self.supplier_tree.insert("", "end",
+                                      values=(supplier.supplier_id, supplier.supplier_name, supplier.service_offered))
+
+    def refresh_event_table(self):
+        for item in self.event_tree.get_children():
+            self.event_tree.delete(item)  # Clear existing entries
+        for event_id, event in self.events.items():
+            self.event_tree.insert("", "end", iid=event_id,
+                                   values=(event.event_id, event.event_name, event.event_date, event.venue))
+
+#starting the employee forms
+    def open_add_employee_form(self):
+        self.add_employee_window = tk.Toplevel(self.root)
+        self.add_employee_window.title("Add New Employee")
+        labels = ['First Name:', 'Last Name:', 'Gender:', 'Phone Number:', 'Employee ID:', 'Department:', 'Job Title:', 'Salary:']
+        self.employee_entries = {}
+        row = 0
+        for label in labels:
+            ttk.Label(self.add_employee_window, text=label).grid(row=row, column=0)
+            entry = ttk.Entry(self.add_employee_window)
+            entry.grid(row=row, column=1)
+            self.employee_entries[label] = entry
+            row += 1
+        ttk.Button(self.add_employee_window, text="Save Employee", command=self.add_employee).grid(row=row, column=1)
+
+    def add_employee(self):
+        details = {label[:-1]: entry.get() for label, entry in self.employee_entries.items()}
+        emp = Employee(details['First Name'], details['Last Name'], details['Gender'], details['Phone Number'],
+                       details['Employee ID'], details['Department'], details['Job Title'], details['Salary'])
+        self.employees[emp.employee_id] = emp
+        save_employee_data(self.employees, self.employees_filename)  # Pass the filename
+        self.refresh_employee_table()
+        self.add_employee_window.destroy()
+
+    def modify_employee(self):
+        emp_id = simpledialog.askstring("Modify Employee", "Enter the ID of the employee to modify")
+        if emp_id in self.employees:
+            emp = self.employees[emp_id]
+            new_dept = simpledialog.askstring("Modify Employee", f"Current Department: {emp.department}. Enter new department (leave blank to keep current):")
+            if new_dept:
+                emp.department = new_dept
+            new_job = simpledialog.askstring("Modify Employee", f"Current Job Title: {emp.job_title}. Enter new job title (leave blank to keep current):")
+            if new_job:
+                emp.job_title = new_job
+            new_salary = simpledialog.askstring("Modify Employee", f"Current Salary: {emp.salary}. Enter new salary (leave blank to keep current):")
+            if new_salary:
+                emp.salary = new_salary
+            save_employee_data(self.employees, self.employees_filename)
+            self.refresh_employee_table()
+        else:
+            messagebox.showerror("Error", "Employee not found")
+
+    def remove_employee(self):
+        emp_id = simpledialog.askstring("Remove Employee", "Enter the ID of the employee to remove")
+        if emp_id in self.employees:
+            del self.employees[emp_id]
+            save_employee_data(self.employees, self.employees_filename)
+            self.refresh_employee_table()
+        else:
+            messagebox.showerror("Error", "Employee not found")
+
+    def find_employee(self):
+        emp_id = simpledialog.askstring("Find Employee", "Enter the ID of the employee to find")
+        if emp_id in self.employees:
+            emp = self.employees[emp_id]
+            details = emp.get_details()
+            messagebox.showinfo("Employee Details", details)
+        else:
+            messagebox.showerror("Error", "Employee not found")
+#starting the client forms
+    def open_add_client_form(self):
+        self.add_client_window = tk.Toplevel(self.root)
+        self.add_client_window.title("Add New Client")
+        labels = ['First Name:', 'Last Name:', 'Gender:', 'Phone Number:', 'Client ID:', 'Email:']
+        self.client_entries = {}
+        row = 0
+        for label in labels:
+            ttk.Label(self.add_client_window, text=label).grid(row=row, column=0)
+            entry = ttk.Entry(self.add_client_window)
+            entry.grid(row=row, column=1)
+            self.client_entries[label] = entry
+            row += 1
+        ttk.Button(self.add_client_window, text="Save Client", command=self.add_client).grid(row=row, column=1)
+
+    def add_client(self):
+        details = {label[:-1]: entry.get() for label, entry in self.client_entries.items()}
+        client = Client(details['First Name'], details['Last Name'], details['Gender'], details['Phone Number'],
+                        details['Client ID'], details['Email'])
+        self.clients[client.client_id] = client
+        save_client_data(self.clients, self.clients_filename)  # Pass the filename
+        self.refresh_client_table()
+        self.add_client_window.destroy()
+
+    def modify_client(self):
+        client_id = simpledialog.askstring("Modify Client", "Enter the ID of the client to modify")
+        if client_id in self.clients:
+            client = self.clients[client_id]
+            new_email = simpledialog.askstring("Modify Client", f"Current Email: {client.email}. Enter new email (leave blank to keep current):")
+            if new_email:
+                client.email = new_email
+            save_client_data(self.clients, self.clients_filename)
+            self.refresh_client_table()
+        else:
+            messagebox.showerror("Error", "Client not found")
+
+    def remove_client(self):
+        client_id = simpledialog.askstring("Remove Client", "Enter the ID of the client to remove")
+        if client_id in self.clients:
+            del self.clients[client_id]
+            save_client_data(self.clients, self.clients_filename)
+            self.refresh_client_table()
+        else:
+            messagebox.showerror("Error", "Client not found")
+
+    def find_client(self):
+        client_id = simpledialog.askstring("Find Client", "Enter the ID of the client to find")
+        if client_id in self.clients:
+            client = self.clients[client_id]
+            details = client.get_details()
+            messagebox.showinfo("Client Details", details)
+        else:
+            messagebox.showerror("Error", "Client not found")
+#starting the guest forms 
+    def open_add_guest_form(self):
+        self.add_guest_window = tk.Toplevel(self.root)
+        self.add_guest_window.title("Add New Guest")
+        labels = ['First Name:', 'Last Name:', 'Gender:', 'Phone Number:', 'Guest ID:']
+        self.guest_entries = {}  # Ensure this is an instance attribute
+        row = 0
+        for label in labels:
+            ttk.Label(self.add_guest_window, text=label).grid(row=row, column=0)
+            entry = ttk.Entry(self.add_guest_window)
+            entry.grid(row=row, column=1)
+            self.guest_entries[label] = entry  # Populate the dictionary
+            row += 1
+        ttk.Button(self.add_guest_window, text="Save Guest", command=self.add_guest).grid(row=row, column=1)
+
+    def add_guest(self):
+        details = {label[:-1]: entry.get() for label, entry in self.guest_entries.items()}
+        if all(details.values()):  # Ensure no field is left blank
+            guest = Guest(details['First Name'], details['Last Name'], details['Gender'], details['Phone Number'],
+                          details['Guest ID'])
+            self.guests[guest.guest_id] = guest
+            save_guest_data(self.guests, self.guests_filename)  # Save the guest data
+            self.refresh_guest_table()
+            self.add_guest_window.destroy()
+        else:
+            messagebox.showerror("Error", "All fields are required to add a new guest.")
+
+    def modify_guest(self):
+        guest_id = simpledialog.askstring("Modify Guest", "Enter the ID of the guest to modify")
+        if guest_id in self.guests:
+            guest = self.guests[guest_id]
+            new_phone = simpledialog.askstring("Modify Guest",
+                                               f"Current Phone Number: {guest.phone_number}. Enter new phone number (leave blank to keep current):")
+            if new_phone:  # Ensure that a new phone number is provided before updating
+                guest.phone_number = new_phone
+                save_guest_data(self.guests, self.guests_filename)  # Save the updated guest data
+                self.refresh_guest_table()  # Refresh the table to reflect changes
+            else:
+                messagebox.showinfo("No Changes", "No changes were made.")
+        else:
+            messagebox.showerror("Error", "Guest not found")
+
+    def remove_guest(self):
+        guest_id = simpledialog.askstring("Remove Guest", "Enter the ID of the guest to remove")
+        if guest_id in self.guests:
+            del self.guests[guest_id]  # Remove the guest entry
+            save_guest_data(self.guests, self.guests_filename)  # Pass both guests data and filename
+            self.refresh_guest_table()
+        else:
+            messagebox.showerror("Error", "Guest not found")
+
+    def find_guest(self):
+        guest_id = simpledialog.askstring("Find Guest", "Enter the ID of the guest to find")
+        if guest_id in self.guests:
+            guest = self.guests[guest_id]
+            details = guest.get_details()
+            messagebox.showinfo("Guest Details", details)
+        else:
+            messagebox.showerror("Error", "Guest not found")
+#starting the supplier forms
+    def open_add_supplier_form(self):
+        self.add_supplier_window = tk.Toplevel(self.root)
+        self.add_supplier_window.title("Add New Supplier")
+        labels = ['Supplier ID:', 'Supplier Name:', 'Service Offered:']
+        self.supplier_entries = {}
+        row = 0
+        for label in labels:
+            ttk.Label(self.add_supplier_window, text=label).grid(row=row, column=0)
+            entry = ttk.Entry(self.add_supplier_window)
+            entry.grid(row=row, column=1)
+            self.supplier_entries[label] = entry
+            row += 1
+        ttk.Button(self.add_supplier_window, text="Save Supplier", command=self.add_supplier).grid(row=row, column=1)
+
+    def add_supplier(self):
+        details = {label[:-1]: entry.get() for label, entry in self.supplier_entries.items()}
+        if all(details.values()):  # Ensure no field is left blank
+            supplier = Supplier(details['Supplier ID'], details['Supplier Name'], details['Service Offered'])
+            self.suppliers.append(supplier)
+            save_supplier_data(self.suppliers, self.suppliers_filename)
+            self.refresh_supplier_table()
+            self.add_supplier_window.destroy()
+        else:
+            messagebox.showerror("Error", "All fields are required to add a new supplier.")
+
+    def modify_supplier(self):
+        supplier_id = simpledialog.askstring("Modify Supplier", "Enter the ID of the supplier to modify")
+        for supplier in self.suppliers:
+            if supplier.supplier_id == supplier_id:
+                new_name = simpledialog.askstring("Modify Supplier",
+                                                  f"Current Supplier Name: {supplier.supplier_name}. Enter new name (leave blank to keep current):")
+                if new_name:
+                    supplier.supplier_name = new_name
+                new_service = simpledialog.askstring("Modify Supplier",
+                                                     f"Current Service Offered: {supplier.service_offered}. Enter new service (leave blank to keep current):")
+                if new_service:
+                    supplier.service_offered = new_service
+                save_supplier_data(self.suppliers, self.suppliers_filename)
+                self.refresh_supplier_table()
+                break
+        else:
+            messagebox.showerror("Error", "Supplier not found")
+
+    def remove_supplier(self):
+        supplier_id = simpledialog.askstring("Remove Supplier", "Enter the ID of the supplier to remove")
+        self.suppliers = [supplier for supplier in self.suppliers if supplier.supplier_id != supplier_id]
+        save_supplier_data(self.suppliers, self.suppliers_filename)
+        self.refresh_supplier_table()
+
+    def find_supplier(self):
+        supplier_id = simpledialog.askstring("Find Supplier", "Enter the ID of the supplier to find")
+        for supplier in self.suppliers:
+            if supplier.supplier_id == supplier_id:
+                messagebox.showinfo("Supplier Details", str(supplier))
+                break
+        else:
+            messagebox.showerror("Error", "Supplier not found")
+#starting the event form
+    def open_add_event_form(self):
+        self.add_event_window = tk.Toplevel(self.root)
+        self.add_event_window.title("Add New Event")
+        labels = ['Event ID:', 'Event Name:', 'Event Date:', 'Venue:']
+        self.event_entries = {}
+        row = 0
+        for label in labels:
+            ttk.Label(self.add_event_window, text=label).grid(row=row, column=0)
+            entry = ttk.Entry(self.add_event_window)
+            entry.grid(row=row, column=1)
+            self.event_entries[label] = entry
+            row += 1
+        ttk.Button(self.add_event_window, text="Save Event", command=self.add_event).grid(row=row, column=1)
+
+    def add_event(self):
+        details = {label[:-1]: entry.get() for label, entry in self.event_entries.items()}
+        if all(details.values()):  # Ensure no field is left blank
+            event = Event(details['Event ID'], details['Event Name'], details['Event Date'], details['Venue'])
+            self.events[event.event_id] = event
+            save_event_data(self.events, self.events_filename)
+            self.refresh_event_table()
+            self.add_event_window.destroy()
+
+    def modify_event(self):
+        event_id = simpledialog.askstring("Modify Event", "Enter the ID of the event to modify")
+        for event in self.events.values():
+            if event.event_id == event_id:
+                new_name = simpledialog.askstring("Modify Event",
+                                                  f"Current Event Name: {event.event_name}. Enter new name (leave blank to keep current):")
+                if new_name:
+                    event.event_name = new_name
+                new_date = simpledialog.askstring("Modify Event",
+                                                  f"Current Event Date: {event.event_date}. Enter new date (leave blank to keep current):")
+                if new_date:
+                    event.event_date = new_date
+                new_venue = simpledialog.askstring("Modify Event",
+                                                   f"Current Venue: {event.venue}. Enter new venue (leave blank to keep current):")
+                if new_venue:
+                    event.venue = new_venue
+                save_event_data(self.events, self.events_filename)
+                self.refresh_event_table()
+                break
+        else:
+            messagebox.showerror("Error", "Event not found")
+
+    def remove_event(self):
+        event_id = simpledialog.askstring("Remove Event", "Enter the ID of the event to remove")
+        if event_id in self.events:
+            del self.events[event_id]
+            save_event_data(self.events, self.events_filename)
+            self.refresh_event_table()
+        else:
+            messagebox.showerror("Error", "Event not found")
+
+    def find_event(self):
+        event_id = simpledialog.askstring("Find Event", "Enter the ID of the event to find")
+        if event_id in self.events:
+            event = self.events[event_id]
+            details = event.get_event_details()
+            messagebox.showinfo("Event Details", details)
+        else:
+            messagebox.showerror("Error", "Event not found")
+#starting the venue form
+    def open_add_venue_form(self):
+        self.add_venue_window = tk.Toplevel(self.root)
+        self.add_venue_window.title("Add New Venue")
+        labels = ['ID:', 'Name:', 'Location:']
+        self.venue_entries = {}
+        row = 0
+        for label in labels:
+            ttk.Label(self.add_venue_window, text=label).grid(row=row, column=0)
+            entry = ttk.Entry(self.add_venue_window)
+            entry.grid(row=row, column=1)
+            self.venue_entries[label] = entry
+            row += 1
+        ttk.Button(self.add_venue_window, text="Save Venue", command=self.add_venue).grid(row=row, column=1)
+
+    def add_venue(self):
+        details = {label[:-1]: entry.get() for label, entry in self.venue_entries.items()}
+        venue = Venue(details['ID'], details['Name'], details['Location'])
+        self.venues[venue.venue_id] = venue
+        save_venue_data(self.venues, self.venues_filename)
+        self.refresh_venue_table()
+        self.add_venue_window.destroy()
+
+    def modify_venue(self):
+        venue_id = simpledialog.askstring("Modify Venue", "Enter the ID of the venue to modify")
+        if venue_id in self.venues:
+            venue = self.venues[venue_id]
+            new_location = simpledialog.askstring("Modify Venue",
+                                                  f"Current Location: {venue.location}. Enter new location (leave blank to keep current):")
+            if new_location:
+                venue.location = new_location
+                save_venue_data(self.venues, self.venues_filename)
+                self.refresh_venue_table()
+        else:
+            messagebox.showerror("Error", "Venue not found")
+
+    def remove_venue(self):
+        venue_id = simpledialog.askstring("Remove Venue", "Enter the ID of the venue to remove")
+        if venue_id in self.venues:
+            del self.venues[venue_id]
+            save_venue_data(self.venues, self.venues_filename)
+            self.refresh_venue_table()
+        else:
+            messagebox.showerror("Error", "Venue not found")
+
+    def find_venue(self):
+        venue_id = simpledialog.askstring("Find Venue", "Enter the ID of the venue to find")
+        if venue_id in self.venues:
+            venue = self.venues[venue_id]
+            details = str(venue)
+            messagebox.showinfo("Venue Details", details)
+        else:
+            messagebox.showerror("Error", "Venue not found")
+
+    def refresh_venue_table(self):
+        for i in self.venue_tree.get_children():
+            self.venue_tree.delete(i)
+        for venue_id, venue in self.venues.items():
+            self.venue_tree.insert("", "end", values=(venue.venue_id, venue.venue_name, venue.location))
+
+#run final
+root = tk.Tk()
+app = ManagementApp(root)
+root.mainloop()
